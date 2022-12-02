@@ -82,8 +82,16 @@ namespace Engine.Graphics {
             return total;
         }
 
+        public Vector interp(Vector other, float interp_amt) {
+            return this + ( ( this-other ) * interp_amt );
+        }
+
+        public Vector midpoint(Vector other) {
+            return ( this+other ) / 2.0f;
+        }
+
         public Vector unit() {
-            return this/magnitude();
+            return this / magnitude();
         }
 
         public static bool operator ==(Vector self, Vector other) {
@@ -178,6 +186,16 @@ namespace Engine.Graphics {
 
     public class Vector2 : Vector {
 
+        public Vector2() : base(0, 0) {}
+        public Vector2(float x, float y) : base(x, y) {}
+
+        public static bool operator ==(Vector2 self, Vector2 other) { return (Vector2)((Vector)self)==((Vector)other); }
+        public static bool operator !=(Vector2 self, Vector2 other) { return (Vector2)((Vector)self)!=((Vector)other); }
+        public static Vector2 operator +(Vector2 self, Vector2 other) { return (Vector2)((Vector)self)+other; }
+        public static Vector2 operator -(Vector2 self, Vector2 other) { return (Vector2)((Vector)self)-other; }
+        public static Vector2 operator *(Vector2 self, float other) { return (Vector2)((Vector)self)*other; }
+        public static Vector2 operator /(Vector2 self, float other) { return (Vector2)((Vector)self)/other; }
+
         protected override int component_count => 2;
 
         public float x {
@@ -193,6 +211,16 @@ namespace Engine.Graphics {
     }
 
     public class Vector3 : Vector {
+
+        public Vector3() : base(0, 0, 0) {}
+        public Vector3(float x, float y, float z) : base(x, y, z) {}
+
+        public static bool operator ==(Vector3 self, Vector3 other) { return (Vector3)((Vector)self)==((Vector)other); }
+        public static bool operator !=(Vector3 self, Vector3 other) { return (Vector3)((Vector)self)!=((Vector)other); }
+        public static Vector3 operator +(Vector3 self, Vector3 other) { return (Vector3)((Vector)self)+other; }
+        public static Vector3 operator -(Vector3 self, Vector3 other) { return (Vector3)((Vector)self)-other; }
+        public static Vector3 operator *(Vector3 self, float other) { return (Vector3)((Vector)self)*other; }
+        public static Vector3 operator /(Vector3 self, float other) { return (Vector3)((Vector)self)/other; }
 
         protected override int component_count => 3;
 
@@ -214,6 +242,16 @@ namespace Engine.Graphics {
     }
 
     public class Vector4 : Vector {
+
+        public Vector4() : base(0, 0, 0, 0) {}
+        public Vector4(float x, float y, float z, float w) : base(x, y, z, w) {}
+
+        public static bool operator ==(Vector4 self, Vector4 other) { return (Vector4)((Vector)self)==((Vector)other); }
+        public static bool operator !=(Vector4 self, Vector4 other) { return (Vector4)((Vector)self)!=((Vector)other); }
+        public static Vector4 operator +(Vector4 self, Vector4 other) { return (Vector4)((Vector)self)+other; }
+        public static Vector4 operator -(Vector4 self, Vector4 other) { return (Vector4)((Vector)self)-other; }
+        public static Vector4 operator *(Vector4 self, float other) { return (Vector4)((Vector)self)*other; }
+        public static Vector4 operator /(Vector4 self, float other) { return (Vector4)((Vector)self)/other; }
 
         protected override int component_count => 4;
 

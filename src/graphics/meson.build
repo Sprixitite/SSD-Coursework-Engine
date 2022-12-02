@@ -1,1 +1,1 @@
-SPRIX_ENGINE_MAIN_SRC += files('Vector.cs')
+SPRIX_ENGINE_SRC += files('Vector.cs', 'Matrix.cs', 'Tri.cs')

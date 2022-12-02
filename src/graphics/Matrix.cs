@@ -2,41 +2,48 @@ using System;
 
 namespace Engine.Graphics {
 
-    public struct Matrix3x3 {
+    public sealed class Matrix3x3 {
 
-        Vector3 row_x {
+        public Vector3 row_x {
             get => new Vector3(components[0], components[1], components[2]);
         }
 
-        Vector3 row_y {
+        public Vector3 row_y {
             get => new Vector3(components[3], components[4], components[5]);
         }
 
-        Vector3 row_z {
+        public Vector3 row_z {
             get => new Vector3(components[6], components[7], components[8]);
         }
 
-        Vector3 col_x {
+        public Vector3 col_x {
             get => new Vector3(components[0], components[3], components[6]);
         }
 
-        Vector3 col_y {
+        public Vector3 col_y {
             get => new Vector3(components[1], components[4], components[7]);
         }
 
-        Vector3 col_z {
+        public Vector3 col_z {
             get => new Vector3(components[2], components[5], components[8]);
         }
 
         float[] components = new float[9];
 
         public static Vector3 operator *(Matrix3x3 self, Vector3 other) {
-            return new Vector3(other.x*self.x, other.y*self.y, other.z*self.z);
+            Vector3 col_x = self.col_x*other.x;
+            Vector3 col_y = self.col_y*other.y;
+            Vector3 col_z = self.col_z*other.z;
+            return new Vector3(
+                col_x.x + col_y.x + col_z.x,
+                col_x.y + col_y.y + col_z.y,
+                col_x.z + col_y.z + col_z.z
+            );
         }
 
         public static Matrix3x3 operator *(Matrix3x3 self, Matrix3x3 other) {
 
-            Matrix3x3 result;
+            Matrix3x3 result = new Matrix3x3();
 
             // X Column
             result.components[0] = self.row_x.dot(other.col_x);
@@ -55,6 +62,10 @@ namespace Engine.Graphics {
 
             return result;
 
+        }
+
+        public Matrix3x3() {
+            components = new float[9];
         }
 
         public Matrix3x3(Vector3 euler) {

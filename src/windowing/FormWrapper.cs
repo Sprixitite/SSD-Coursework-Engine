@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Engine.Windowing {
 
@@ -7,12 +8,10 @@ namespace Engine.Windowing {
     internal class FormWrapper {
 
         public FormWrapper(System.Windows.Forms.Form wrapping) {
-            Library.validate_initialised();
             underlying = wrapping;
         }
 
         public static FormWrapper create() {
-            Library.validate_initialised();
             return new FormWrapper(new GenericForm());
         }
 
@@ -30,10 +29,10 @@ namespace Engine.Windowing {
                 Type this_type = control_index_pairs[i].GetType();
                 Type next_type = control_index_pairs[i+1].GetType();
                 if (this_type != typeof(string) || next_type != typeof(System.Windows.Forms.Control)) throw new Exception("add_controls only accepts pairs of control keys and controls!");
-                controls.Add(control_index_pairs[i], control_index_pairs[i+1]);
-                control_list.Add(control_index_pairs[i+1]);
+                controls.Add((string)control_index_pairs[i], (System.Windows.Forms.Control)control_index_pairs[i+1]);
+                control_list.Add((System.Windows.Forms.Control)control_index_pairs[i+1]);
             }
-            underlying.Controls.AddRange(control_list);
+            underlying.Controls.AddRange(control_list.ToArray());
             underlying.ResumeLayout();
         }
 

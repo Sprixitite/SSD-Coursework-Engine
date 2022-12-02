@@ -1,16 +1,16 @@
-using System;
+// using System;
 
-namespace Engine.Windowing {
+// namespace Engine.Windowing {
 
-    public class GameWindow : FormWrapper {
+//     public class GameWindow : FormWrapper {
 
-        public Engine.Graphics.RenderDescriptor render_descriptor {
-            get;
-            private set;
-        }
+//         public Engine.Graphics.RenderDescriptor render_descriptor {
+//             get;
+//             private set;
+//         }
 
-        //public void draw()
+//         //public void draw()
 
-    }
+//     }
 
-}
+// }
