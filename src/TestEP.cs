@@ -12,36 +12,8 @@ namespace Engine {
             }
 
             protected override void OnPaint(System.Windows.Forms.PaintEventArgs pe) {
-                base.OnPaint(pe);
-                System.Drawing.Graphics g = this.CreateGraphics();
-                g.Clear(Color.Blue);
-                Graphics.Tri<Graphics.Vector2> tri = new Graphics.Tri<Graphics.Vector2>(new Graphics.Vector2(1, 0), new Graphics.Vector2(0, 1), new Graphics.Vector2(-1, 0));
-
-                Pen white = new Pen(Color.White);
-                Pen black = new Pen(Color.Black);
-
-                const int FRAME_X = 1280;
-                const int FRAME_Y = 720;
-                
-                for (int i=0; i<FRAME_X; i++) {
-
-                    for (int j=0; j<FRAME_Y; j++) {
-
-                        Graphics.Vector2 pos_screen = new Graphics.Vector2((i-(FRAME_X/2))/(float)(FRAME_X/2), (j-(FRAME_Y/2))/(float)(FRAME_Y/2));
-
-                        switch (tri.contains(pos_screen)) {
-                            case true:
-                                g.DrawRectangle(white, i, j, 1, 1);
-                                break;
-                            case false:
-                                g.DrawRectangle(black, i, j, 1, 1);
-                                break;
-                        }
-
-                    }
-
-                }
-
+                Console.WriteLine("Frame!");
+                this.CreateGraphics().Clear(Color.Blue);
             }
 
         }
@@ -54,10 +26,10 @@ namespace Engine {
             System.Windows.Forms.Application.Run(new my_window());
             Console.WriteLine("Cry!");
 
-            Windowing.FormWrapper window = new Windowing.FormWrapper(new my_window());
+            //Windowing.FormWrapper window = new Windowing.FormWrapper(new my_window());
 
             //window.underlying.MaximumSize = new Size(16, 16);
-            window.underlying.ShowDialog();
+            //window.underlying.ShowDialog();
             
             System.Drawing.Graphics g = window.underlying.CreateGraphics();
 
