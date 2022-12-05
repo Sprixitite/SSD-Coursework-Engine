@@ -46,7 +46,7 @@ namespace Engine.Graphics {
             );
         }
 
-        // C# no boilerplate challenge (impossible)
+        // ! C# no boilerplate challenge (impossible)
         public static Vector3 operator *(Vector3 other, Matrix3x3 self) {
             Vector3 col_x = self.col_x*other.x;
             Vector3 col_y = self.col_y*other.y;
