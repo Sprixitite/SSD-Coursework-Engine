@@ -5,7 +5,7 @@ namespace Engine.Graphics {
     public sealed class Vector4 {
 
         public Vector4() { x = 0; y = 0; z = 0; w=0; }
-        public Vector4(float _x, float _y, float _z, float _w) { x = _x; y = _y; _z = _z; w = _w; }
+        public Vector4(float _x, float _y, float _z, float _w) { x = _x; y = _y; z = _z; w = _w; }
 
         public static bool operator ==(Vector4 self, Vector4 other) { return (self.x==other.x) && (self.y==other.y) && (self.z==other.z) && (self.w==other.w); }
         public static bool operator !=(Vector4 self, Vector4 other) { return (self.x!=other.x) && (self.y!=other.y) && (self.z==other.z) && (self.w!=other.w); }

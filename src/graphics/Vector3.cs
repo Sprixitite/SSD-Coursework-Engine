@@ -5,7 +5,7 @@ namespace Engine.Graphics {
     public sealed class Vector3 {
 
         public Vector3() { x = 0; y = 0; z = 0; }
-        public Vector3(float _x, float _y, float _z) { x = _x; y = _y; _z = _z; }
+        public Vector3(float _x, float _y, float _z) { x = _x; y = _y; z = _z; }
 
         public static bool operator ==(Vector3 self, Vector3 other) { return (self.x==other.x) && (self.y==other.y) && (self.z==other.z); }
         public static bool operator !=(Vector3 self, Vector3 other) { return (self.x!=other.x) && (self.y!=other.y) && (self.z==other.z); }
@@ -33,6 +33,10 @@ namespace Engine.Graphics {
         public float z {
             get;
             set;
+        }
+
+        public override string ToString() {
+            return "Vector3 {\n\t" + x + ",\n\t" + y + ",\n\t" + z + "\n}";
         }
 
     }

@@ -32,6 +32,10 @@ namespace Engine.Graphics {
             set;
         }
 
+        public override string ToString() {
+            return "Vector2 {\n\t" + x + ",\n\t" + y + "\n}";
+        }
+
     }
 
 }
