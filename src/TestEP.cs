@@ -31,12 +31,12 @@ namespace Engine {
                 Engine.Graphics.Camera cam = new Engine.Graphics.Camera();
                 cam.position = new Engine.Graphics.Vector3(0.0f, 0.0f, 0.0f);
                 cam.rotation = new Engine.Graphics.Matrix3x3(new Engine.Graphics.Vector3(0.0f, 0.0f, 0.0f));
-                cam.surface_dist = DateTime.Now.Millisecond*0.005f;
+                cam.surface_dist = 1000.0f;//= DateTime.Now.Millisecond*0.005f;
                 Engine.Graphics.Tri3D tri = new Engine.Graphics.Tri3D(new Engine.Graphics.Vector3(0.5f, 0.5f, 10.0f), new Engine.Graphics.Vector3(-0.5f, 0.5f, 15.0f), new Engine.Graphics.Vector3(-0.5f, -0.5f, 10.0f));
                 Console.WriteLine(tri.p1);
                 Console.WriteLine(tri.p2);
                 Console.WriteLine(tri.p3);
-                Engine.Graphics.Tri2D tri2d = tri.project_onto(cam).to_pixels(new Engine.Graphics.Vector2(this.Width, this.Height));
+                Engine.Graphics.Tri2D tri2d = tri.project_onto(cam);//.to_pixels(new Engine.Graphics.Vector2(this.Width, this.Height));
                 Console.WriteLine(tri2d.p1);
                 Console.WriteLine(tri2d.p2);
                 Console.WriteLine(tri2d.p3);
@@ -49,8 +49,6 @@ namespace Engine {
 
         [STAThread]
         public static void Main(string[] args) {
-
-            Console.WriteLine(new Graphics.Vector2(-6, 8).dot(new Graphics.Vector2(5, 12)));
 
             System.Windows.Forms.Application.Run(new my_window());
             Console.WriteLine("Cry!");
