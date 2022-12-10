@@ -50,10 +50,11 @@ namespace Engine.Graphics {
     public class Tri2D {
 
         public static implicit operator System.Drawing.PointF[](Tri2D self) {
-            System.Drawing.PointF[] points = new System.Drawing.PointF[3];
-            points[0] = self.p1;
-            points[1] = self.p2;
-            points[2] = self.p3;
+            System.Drawing.PointF[] points = new System.Drawing.PointF[3] {
+                self.p1,
+                self.p2,
+                self.p3
+            };
             return points;
         }
 
@@ -62,6 +63,16 @@ namespace Engine.Graphics {
                 new Vector2(((p1.x+1)/2)*screen_size.x, ((p1.y+1)/2)*screen_size.y),
                 new Vector2(((p2.x+1)/2)*screen_size.x, ((p2.y+1)/2)*screen_size.y),
                 new Vector2(((p3.x+1)/2)*screen_size.x, ((p3.y+1)/2)*screen_size.y)
+            );
+        }
+
+        public Tri2D to_screenspace(Vector2 screen_size) {
+            float ratio = screen_size.x/screen_size.y;
+            Vector2 half_size = screen_size/2.0f;
+            return new Tri2D(
+                (p1*ratio)+half_size,
+                (p2*ratio)+half_size,
+                (p3*ratio)+half_size
             );
         }
 
