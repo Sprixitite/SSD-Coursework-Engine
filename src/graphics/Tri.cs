@@ -58,14 +58,6 @@ namespace Engine.Graphics {
             return points;
         }
 
-        public Tri2D to_pixels(Vector2 screen_size) {
-            return new Tri2D(
-                new Vector2(((p1.x+1)/2)*screen_size.x, ((p1.y+1)/2)*screen_size.y),
-                new Vector2(((p2.x+1)/2)*screen_size.x, ((p2.y+1)/2)*screen_size.y),
-                new Vector2(((p3.x+1)/2)*screen_size.x, ((p3.y+1)/2)*screen_size.y)
-            );
-        }
-
         public Tri2D to_screenspace(Vector2 screen_size) {
             float ratio = screen_size.x/screen_size.y;
             Vector2 half_size = screen_size/2.0f;
