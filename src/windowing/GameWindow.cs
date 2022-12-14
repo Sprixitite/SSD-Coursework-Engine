@@ -16,8 +16,10 @@ namespace Engine.Windowing {
 
             System.Drawing.BufferedGraphics render_buffer = buffered_graphics_context.Allocate(this.CreateGraphics(), this.DisplayRectangle);
 
+            render_buffer.Graphics.Clear(System.Drawing.Color.Blue);
+
             foreach (Tri3D tri in triangles) {
-                render_buffer.Graphics.FillPolygon(new System.Drawing.SolidBrush(Color.Green), tri.project_onto(cam).to_screenspace(new Vector2(this.Width, this.Height)));
+                render_buffer.Graphics.FillPolygon(new System.Drawing.SolidBrush(System.Drawing.Color.Green), tri.project_onto(cam).to_screenspace(new Vector2(this.Width, this.Height)));
             }
 
             render_buffer.Render();

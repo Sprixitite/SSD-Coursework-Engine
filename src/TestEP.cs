@@ -25,6 +25,8 @@ namespace Engine {
             //     dbg = bgc.Allocate(g, new Rectangle(Math.Ceiling(this.Width/2.0f), Math.Ceiling(this.Height/2.0f), this.Width+1, this.Height+1));
             // }
 
+
+
             protected override void OnPaint(System.Windows.Forms.PaintEventArgs e/*object _s, EventArgs _e*/) {
                 Console.WriteLine("Frame!2");
                 this.CreateGraphics().Clear(Color.Blue);
@@ -36,7 +38,7 @@ namespace Engine {
                 Console.WriteLine(tri.p1);
                 Console.WriteLine(tri.p2);
                 Console.WriteLine(tri.p3);
-                Engine.Graphics.Tri2D tri2d = tri.project_onto(cam);//.to_pixels(new Engine.Graphics.Vector2(this.Width, this.Height));
+                Engine.Graphics.Tri2D tri2d = tri.project_onto(cam).to_screenspace(new Graphics.Vector2(this.Width, this.Height));//.to_pixels(new Engine.Graphics.Vector2(this.Width, this.Height));
                 Console.WriteLine(tri2d.p1);
                 Console.WriteLine(tri2d.p2);
                 Console.WriteLine(tri2d.p3);
@@ -50,8 +52,11 @@ namespace Engine {
         [STAThread]
         public static void Main(string[] args) {
 
-            System.Windows.Forms.Application.Run(new my_window());
-            Console.WriteLine("Cry!");
+            Engine.Windowing.GameWindow game_window = new Windowing.GameWindow();
+
+            System.Threading.Thread scheduler_thread = new System.Threading.Thread(Engine.Core.TaskScheduler.handover);
+            scheduler_thread.Start(game_window);
+            System.Windows.Forms.Application.Run(game_window);
 
             //Windowing.FormWrapper window = new Windowing.FormWrapper(new my_window());
 

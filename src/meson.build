@@ -6,3 +6,4 @@ endif
 subdir('util')
 subdir('graphics')
 subdir('windowing')
+subdir('core')
