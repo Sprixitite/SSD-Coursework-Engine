@@ -1,1 +1,1 @@
-SPRIX_ENGINE_SRC += files('Camera.cs', 'Vector2.cs', 'Vector3.cs', 'Vector4.cs', 'Matrix.cs', 'Tri.cs')
+SPRIX_ENGINE_SRC += files('Camera.cs', 'IVector.cs', 'Vector2.cs', 'Vector3.cs', 'Vector4.cs', 'Matrix.cs', 'Tri.cs')
