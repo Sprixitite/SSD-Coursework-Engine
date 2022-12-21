@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0B863DD2-F838-43F0-B061-DF97A6028468}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SprixEngine</RootNamespace>
+    <AssemblyName>SprixEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="src\TestEP.cs" />
+    <Compile Include="src\core\Task.cs" />
+    <Compile Include="src\core\TaskScheduler.cs" />
+    <Compile Include="src\data\Bounds.cs" />
+    <Compile Include="src\data\Transform.cs" />
+    <Compile Include="src\graphics\Camera.cs" />
+    <Compile Include="src\graphics\Matrix.cs" />
+    <Compile Include="src\graphics\StaticTexture.cs" />
+    <Compile Include="src\graphics\Texture.cs" />
+    <Compile Include="src\graphics\Tri.cs" />
+    <Compile Include="src\graphics\IVector.cs" />
+    <Compile Include="src\graphics\Vector2.cs" />
+    <Compile Include="src\graphics\Vector3.cs" />
+    <Compile Include="src\graphics\Vector4.cs" />
+    <Compile Include="src\graphics\Vertex.cs" />
+    <Compile Include="src\maps\Brush.cs" />
+    <Compile Include="src\maps\Face.cs" />
+    <Compile Include="src\IO\ObjFile.cs" />
+    <Compile Include="src\Util\Threads.cs" />
+    <Compile Include="src\UI\UIElement.cs" />
+    <Compile Include="src\UI\UIPanel.cs" />
+    <Compile Include="src\UI\UIPosition.cs" />
+    <Compile Include="src\windowing\FormWrapper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\windowing\GameWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\windowing\Windower.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
