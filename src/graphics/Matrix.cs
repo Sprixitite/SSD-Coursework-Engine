@@ -91,20 +91,21 @@ namespace Engine.Graphics {
 
             euler = _euler;
 
+
             // X Column
-            components[0] = MathF.Cos(euler.y)*MathF.Cos(euler.z);
-            components[3] = MathF.Cos(euler.y)*MathF.Sin(euler.z);
-            components[6] = -MathF.Sin(euler.y);
+            components[0] = (float)Math.Cos(euler.y)*(float)Math.Cos(euler.z);
+            components[3] = (float)Math.Cos(euler.y)*(float)Math.Sin(euler.z);
+            components[6] = -(float)Math.Sin(euler.y);
 
             // Y Column
-            components[1] = MathF.Sin(euler.x)*MathF.Sin(euler.y)*MathF.Cos(euler.z) - MathF.Cos(euler.x)*MathF.Sin(euler.z);
-            components[4] = MathF.Sin(euler.x)*MathF.Sin(euler.y)*MathF.Sin(euler.z) + MathF.Cos(euler.x)*MathF.Cos(euler.z);
-            components[7] = MathF.Sin(euler.x)*MathF.Cos(euler.y);
+            components[1] = (float)Math.Sin(euler.x)*(float)Math.Sin(euler.y)*(float)Math.Cos(euler.z) - (float)Math.Cos(euler.x)*(float)Math.Sin(euler.z);
+            components[4] = (float)Math.Sin(euler.x)*(float)Math.Sin(euler.y)*(float)Math.Sin(euler.z) + (float)Math.Cos(euler.x)*(float)Math.Cos(euler.z);
+            components[7] = (float)Math.Sin(euler.x)*(float)Math.Cos(euler.y);
 
             // Z Column
-            components[2] = MathF.Cos(euler.x)*MathF.Sin(euler.y)*MathF.Cos(euler.z) + MathF.Sin(euler.x)*MathF.Sin(euler.z);
-            components[5] = MathF.Cos(euler.x)*MathF.Sin(euler.y)*MathF.Sin(euler.z) - MathF.Sin(euler.x)*MathF.Cos(euler.z);
-            components[8] = MathF.Cos(euler.x)*MathF.Cos(euler.y);
+            components[2] = (float)Math.Cos(euler.x)*(float)Math.Sin(euler.y)*(float)Math.Cos(euler.z) + (float)Math.Sin(euler.x)*(float)Math.Sin(euler.z);
+            components[5] = (float)Math.Cos(euler.x)*(float)Math.Sin(euler.y)*(float)Math.Sin(euler.z) - (float)Math.Sin(euler.x)*(float)Math.Cos(euler.z);
+            components[8] = (float)Math.Cos(euler.x)*(float)Math.Cos(euler.y);
 
         }
 
