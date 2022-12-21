@@ -25,7 +25,7 @@ namespace Engine.Core {
             }
         }
 
-        private static bool should_exit;
+        internal static bool should_exit;
 
         private static System.Windows.Forms.Form main_window;
 
