@@ -5,7 +5,7 @@ namespace Engine.Graphics {
 
     public sealed class StaticTexture : Texture {
 
-        public Image GetImage() => texture;
+        public override Image get_texture() => texture;
         private Image texture;
 
     }

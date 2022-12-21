@@ -9,8 +9,8 @@ namespace Engine {
         [STAThread]
         public static void Main(string[] args) {
 
-            Engine.IO.ForMapper<string>.read_file("/home/rory/regextest.txt");
-            Console.ReadKey();
+            //Engine.IO.ForMapper<string>.read_file("/home/rory/regextest.txt");
+            //Console.ReadKey();
 
             Engine.Windowing.GameWindow game_window = new Windowing.GameWindow();
 

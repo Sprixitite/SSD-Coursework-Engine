@@ -5,7 +5,7 @@ namespace Engine.IO {
 
     public static class ObjFile {
 
-        private const string sprix_regex = "^([!-\\.0-~]+ |\\[\\S+\\])([^\"\\/\n ]+|\".*\"|)"; private static readonly Regex OBJ_REGEX = new Regex("^[!-\"\\$-~]+ ([^\"#\n ]+((?! #)[^\"#\n]*)*)");
+        private const string sprix_regex = "^([!-\\.0-~]+ |\\[\\S+\\])([^\"\\/\n ]+|\".*\"|)"; private static readonly Regex OBJ_REGEX = new Regex("^( ?[!-\"\\$-~]+)+");
 
         private enum LineType {
             FACE_DEF,
@@ -16,10 +16,11 @@ namespace Engine.IO {
             SHADING_EDIT,
             VERTEX_DEF,
             VERTEX_NM_DEF,
-            VERTEX_UV_DEF
+            VERTEX_UV_DEF,
+            UNKNOWN
         }
 
-        private LineType get_line_type(string line) {
+        private static LineType get_line_type(string line) {
 
             switch (line[0]) {
 
@@ -31,16 +32,17 @@ namespace Engine.IO {
                 case 's': return LineType.SHADING_EDIT;
 
                 case 'v': switch (line[1]) {
-                    case ' ': return LineType.VERTEX_DEF;
                     case 'n': return LineType.VERTEX_NM_DEF;
                     case 't': return LineType.VERTEX_UV_DEF;
-                }
+                } return LineType.VERTEX_DEF;
 
             }
 
+            return LineType.UNKNOWN;
+
         }
 
-        public void read_file(string path) {
+        public static void read_file(string path) {
 
             foreach (string line in System.IO.File.ReadLines(path)) {
 
@@ -49,7 +51,12 @@ namespace Engine.IO {
                 LineType line_type = get_line_type(real_line);
 
                 switch (line_type) {
-                    case LineType
+                    default:
+                    case LineType.UNKNOWN:
+                        throw new Exception("Found an unexpected line prefix when attempting to parse .obj!");
+                    case LineType.VERTEX_NM_DEF:
+                    case LineType.SHADING_EDIT:
+                        continue; // Ignore these, we don't support lighting other than flat lighting
                 }
 
             }

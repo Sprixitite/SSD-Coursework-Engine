@@ -1,5 +1,7 @@
 using System;
 
+using Engine.Graphics;
+
 namespace Engine.UI {
 
     public sealed class UIPosition {

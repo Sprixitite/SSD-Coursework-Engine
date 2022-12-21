@@ -9,9 +9,9 @@ namespace Engine.Maps {
 
         public Texture texture;
 
-        public Tri3D[] to_triangles() {
+        //public Tri3D[] to_triangles() {
             
-        }
+        //}
 
         private Vector3[] points;
 
