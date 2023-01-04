@@ -5,7 +5,7 @@ namespace Engine.IO {
 
     public static class ObjFile {
 
-        private const string sprix_regex = "^([!-\\.0-~]+ |\\[\\S+\\])([^\"\\/\n ]+|\".*\"|)"; private static readonly Regex OBJ_REGEX = new Regex("^( ?[!-\"\\$-~]+)+");
+         private static readonly Regex OBJ_REGEX = new Regex("^( ?[!-\"\\$-~]+)+");
 
         private enum LineType {
             FACE_DEF,
@@ -66,3 +66,4 @@ namespace Engine.IO {
     }
 
 }
+

@@ -4,6 +4,10 @@ namespace Engine.Graphics {
 
     public sealed class ColourRGBA : IEquatable<ColourRGBA> {
 
+        public ColourRGBA(byte red, byte green, byte blue, byte alpha) {
+            r = red; g = green; b = blue; a = alpha;
+        }
+
         public byte r;
         public byte g;
         public byte b;
@@ -25,6 +29,10 @@ namespace Engine.Graphics {
     }
 
     public sealed class ColourHSVA : IEquatable<ColourHSVA>, IEquatable<ColourRGBA> {
+
+        public ColourHSVA(float hue, float saturation, float value, float alpha) {
+            _h = hue; _s = saturation; _v = value; _a = alpha;
+        }
 
         private float _h;
         public float h {
@@ -90,14 +98,14 @@ namespace Engine.Graphics {
         public ColourRGBA to_rgba() {
             float c = _v * _s;
             float h1 = 6 * _h;
-            float x = chroma * ( 1 - Math.Abs( ( h1 % 2 ) - 1 ) );
-            switch (Math.Floor(c)) {
-                case 0:     return new ColourRGBA(c, x, 0, _a);
-                case 1:     return new ColourRGBA(x, c, 0, _a);
-                case 2:     return new ColourRGBA(0, c, x, _a);
-                case 3:     return new ColourRGBA(0, x, c, _a);
-                case 4:     return new ColourRGBA(x, 0, c, _a);
-                default:    return new ColourRGBA(c, 0, x, _a);
+            float x = c * ( 1 - Math.Abs( ( h1 % 2 ) - 1 ) );
+            switch ((int)Math.Floor(c)) {
+                case 0:     return new ColourRGBA((byte)c, (byte)x, 0, (byte)(_a*255));
+                case 1:     return new ColourRGBA((byte)x, (byte)c, 0, (byte)(_a*255));
+                case 2:     return new ColourRGBA(0, (byte)c, (byte)x, (byte)(_a*255));
+                case 3:     return new ColourRGBA(0, (byte)x, (byte)c, (byte)(_a*255));
+                case 4:     return new ColourRGBA((byte)x, 0, (byte)c, (byte)(_a*255));
+                default:    return new ColourRGBA((byte)c, 0, (byte)x, (byte)(_a*255));
             }
         }
 

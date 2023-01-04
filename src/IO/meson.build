@@ -1,1 +1,1 @@
-SPRIX_ENGINE_SRC += files('ObjFile.cs')
+SPRIX_ENGINE_SRC += files('SprixFmt.cs')

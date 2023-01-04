@@ -72,9 +72,12 @@
     <Compile Include="src\maps\Face.cs" />
     <Compile Include="src\IO\ObjFile.cs" />
     <Compile Include="src\Util\Threads.cs" />
+    <Compile Include="src\UI\UIAnchor.cs" />
     <Compile Include="src\UI\UIElement.cs" />
     <Compile Include="src\UI\UIPanel.cs" />
     <Compile Include="src\UI\UIPosition.cs" />
+    <Compile Include="src\UI\UIWindow.cs" />
+    <Compile Include="src\UI\WinformWrapper.cs" />
     <Compile Include="src\windowing\FormWrapper.cs">
       <SubType>Form</SubType>
     </Compile>

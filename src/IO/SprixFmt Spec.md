@@ -48,6 +48,22 @@ Example of our basic composition:
         string "EXAMPLE TEXT"
         [SubField2]
         float 1.00000000
+    [Field3]
+        [1]
+        int 1
+        [2]
+        int 2
+    [Field4/Jagged]
+        [1]
+            [1]
+            int 1
+            [2]
+            int 2
+        [2]
+            [1]
+            int 3
+            [2]
+            int 4
 [Object2]
     [Field1]
     bool true
