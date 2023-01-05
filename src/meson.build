@@ -6,6 +6,6 @@ endif
 subdir('util')
 subdir('graphics')
 subdir('windowing')
-#subdir('IO')
+subdir('IO')
 subdir('core')
 subdir('UI')

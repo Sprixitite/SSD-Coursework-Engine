@@ -60,9 +60,25 @@ namespace Engine {
             button2.button_clicked += () => { Console.WriteLine("Button2 Pressed!"); };
             button3.button_clicked += () => { Console.WriteLine("Button3 Pressed!"); };
 
+            UITextBox textbox = new UITextBox();
+            textbox.text = "TEXTBOX TEST";
+            textbox.position = new UIPosition(0.5f, 0.5f, 0.0f, 0.0f);
+            textbox.size = new UIPosition(0.0f, 0.0f, 69.0f, 69.0f);
+            textbox.anchor = new UIAnchor(AnchorX.CENTER, AnchorY.CENTER);
+
+            UICheckbox checkbox = new UICheckbox();
+            checkbox.position = new UIPosition(0.5f, 0.5f, 74.0f, 0.0f);
+            checkbox.size = new UIPosition(0.0f, 0.0f, 64.0f, 64.0f);
+            checkbox.anchor = new UIAnchor(AnchorX.CENTER, AnchorY.CENTER);
+
             window.add_element(button1);
             window.add_element(button2);
             window.add_element(button3);
+            window.add_element(textbox);
+            window.add_element(checkbox);
+
+            IO.SprixaneSerializer a = new IO.SprixaneSerializer();
+            a.Serialize(System.IO.Stream.Null, Decimal.MaxValue);
 
             // panel.add_element(child_panel);
 

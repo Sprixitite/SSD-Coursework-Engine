@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 
 namespace Engine.IO {
@@ -170,7 +171,7 @@ namespace Engine.IO {
 
             switch (line_info.type) {
                 case LineType.LINK:
-                    return Path.GetFullPath(substrings[1].Replace("\"", ""), new FileInfo(Path.GetFullPath(path)).Directory.FullName);
+                    return Path.Combine(substrings[1].Replace("\"", ""), new FileInfo(Path.GetFullPath(path)).Directory.FullName);
                 case LineType.VALUE:switch (substrings[0]) {
                     case "string":
                         return substrings[1];
@@ -247,14 +248,14 @@ namespace Engine.IO {
         // Publically exposed function for better syntax
         public T convert_to<T>() {
 
-            return convert_to(typeof(T));
+            return (T)convert_to(typeof(T));
 
         }
 
         // Private function, we need to pass "Type t" for recursive calls
         private object convert_to(Type t, string name = "") {
 
-            if (typeof(T).IsArray()) return convert_to_arr(typeof(T), name);
+            if (t.IsArray) return convert_to_arr(t, name);
 
             // Create a new object of the desired type
             object converted = Activator.CreateInstance(t);
@@ -283,96 +284,117 @@ namespace Engine.IO {
 
         }
 
-        private int get_length() {
+        private bool is_array() => members.ContainsKey("0");
 
-            return members.Keys.Count;
+        private int[] infer_array_dimensions() {
 
-        }
-
-        private int[] get_child_lengths() {
-
-            int[] returning = new int[members.Keys.Count];
-            int i=0;
-            foreach (string field_name in members.Keys) {
-                if (members[field_name].GetType() != typeof(DynamicClass)) throw new Exception("WHY ARE ARRAY FUNCTIONS GETTING CALLED ON NON-ARRAY DATA!?!?!?");
-                returning[i] = (members[field_name] as DynamicClass).get_length();
-                i++;
-            }
-
-            return returning;
-
-        }
-
-        private void assign_array(Type t, int[] dimensions, ref Array assignee) {
-
-            int[] state = new int[dimensions.Length];
-            for (int i=0; i<dimensions.Length; i++) { state[i] = 0; }
-
-            foreach (int dimension_length in dimensions) {
-                assign_array_recurse(t, ref assignee, ref state, 1);
-            }
-
-        }
-
-        private void assign_array_recurse(Type t, ref Array assignee, ref int[] state, int depth) {
-
-            if (depth == state.Length-1) {
-                // We are at the bottom level of recursion
-                DynamicClass to_convert = this;
-                foreach (int index in state) {
-                    to_convert = to_convert.members[index.ToString()];
+            List<int> dimensions = new List<int>();
+            DynamicClass working_on = (DynamicClass)members["0"];
+            bool done = false;
+            while (!done) {
+                // We assume child objects of the working object which contain the key "0" are arrays
+                if (working_on.is_array()) {
+                    dimensions.Add(working_on.members.Keys.Count);
+                    working_on = (DynamicClass)working_on.members["0"];
+                } else {
+                    done = true;
                 }
-                assignee.SetValue(to_convert.convert_to(t), state);
             }
+
+            return dimensions.ToArray();
+
+        }
+
+        private object get_value(int[] indexes, int depth=0) {
+            switch (depth == indexes.Length-1) {
+                default:
+                    return this.members[indexes[depth].ToString()];
+                case false:
+                    return ((DynamicClass)members[indexes[depth].ToString()]).get_value(indexes, depth+1);
+            }
+        }
+
+        private void recursive_assign_arr(int[] dimensions, ref Array arr) {
+            int[] index = new int[dimensions.Length];
+            for (int i=0; i<dimensions.Length; i++) {
+                index[i] = 0;
+            }
+            recursive_assign_arr(dimensions, ref index, ref arr, 0);
+        }
+
+        private void recursive_assign_arr(int[] dimensions, ref int[] index, ref Array arr, int depth=0) {
+
+            for (int i=0; i<dimensions[depth]; i++) {
+                if (depth != dimensions.Length-1) recursive_assign_arr(dimensions, ref index, ref arr, depth+1);
+                else {
+                    arr.SetValue(get_value(index), index);
+                }
+            }
+
+            if (depth != 0) index[depth-1]++;
 
         }
 
         private Array convert_to_arr(Type t, string name) {
 
-            string[] extra_field_info = name.ToLower().Split("/");
+            bool single_dim = true;
+            bool jagged = false;
 
-            if (extra_field_info.Length < 2) throw new Exception("Invalid field info encountered in header \"" + name + "\"!");
-
-            Array returning = new byte[]{};
-
-            Type element_type = t.GetElementType();
-
-            int[] dimensions = new int[extra_field_info.Length-2];
-            for (int i=2; i<extra_field_info.Length; i++) {
-                dimensions[i-2] = extra_field_info[i];
+            if (t.GetElementType().IsArray) { single_dim = false; jagged = true; }
+            else {
+                if (members["0"].GetType() != typeof(DynamicClass)) single_dim = true;
+                else if (!((DynamicClass)members["0"]).is_array()) single_dim = true;
             }
 
-            switch (extra_field_info[1]) {
-                case "jagged":
-                    // Jagged array
-                    returning = Array.CreateInstance(element_type, get_length());
-                    foreach (string field_name in members.Keys) {
-                        if (!int.TryParse(field_name, out int index)) throw new Exception("Non-numerical index found in array of header \"" + name + "\"!");
-                        returning[index] = (members[field_name] as DynamicClass).convert_to_arr(t.GetElementType());
-                    }
-                    break;
-                case "multi":
-                    // Multidimensional array
-                    returning = Array.CreateInstance(element_type, get_child_lengths());
-                    for (int i=0; i<dimensions.Length; i++) {
+            Array deserialized;
 
+            switch (single_dim) {
+
+                case true:
+                    deserialized = Array.CreateInstance(t.GetElementType(), members.Keys.Count);
+                    foreach (string index in members.Keys) {
+                        deserialized.SetValue(members[index], int.Parse(index));
                     }
-                    break;
-                case "single":
-                    // Single dimensional array
-                    returning = Array.CreateInstance(element_type, get_length());
-                    foreach (string field_name in members.Keys) {
-                        if (!int.TryParse(field_name, out int index)) throw new Exception("Non-numerical index found in array of header \"" + name + "\"!");
-                        returning[index] = (members[field_name] as DynamicClass).convert_to(t.GetElementType());
-                    }
-                    break;
-                default:
-                    throw new Exception("Unrecognised array type found in header \"" + name + "\"!");
+                    return deserialized;
+
+                case false: switch (jagged) {
+                    case false:
+                        int[] dimensions = infer_array_dimensions();
+                        deserialized = Array.CreateInstance(t.GetElementType(), dimensions);
+                        recursive_assign_arr(dimensions, ref deserialized);
+                        return deserialized;
+                    case true:
+                        deserialized = Array.CreateInstance(t.GetElementType(), members.Keys.Count);
+                        foreach (string index in members.Keys) {
+                            deserialized.SetValue(((DynamicClass)members[index]).convert_to(t.GetElementType()), int.Parse(index));
+                        }
+                        return deserialized;
+                    default:
+                        throw new Exception("NEW BOOLEAN!!!");
+                }
+
+                default: throw new Exception("NEW BOOLEAN!!!");
+
             }
-
-            return returning;
 
         }
+
+    }
+    
+
+    public class SprixaneSerializer : IFormatter {
+
+        public ISurrogateSelector SurrogateSelector { get; set; }
+        public StreamingContext Context { get; set; }
+        public SerializationBinder Binder { get; set; }
+
+        public void Serialize(Stream _s, object graph) {
+
+            System.Console.WriteLine(graph.GetType().Name);
+
+        }
+
+        public object Deserialize(Stream _s) { return false; }
 
     }
 
