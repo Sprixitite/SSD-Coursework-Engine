@@ -22,6 +22,10 @@ namespace Engine.UI {
             transform_invalidated += fake_event_user;
         }
 
+        ~WinformWrapper() {
+            transform_invalidated -= fake_event_user;
+        }
+
         public void add_element(UIElement element) {
 
             if (underlying.Controls.Contains(element.underlying)) throw new Exception("Attempted to add control to a " + this.GetType().Name + " more than once!");
@@ -74,7 +78,7 @@ namespace Engine.UI {
 
         private void _base_on_transform_invalidated() {
 
-            Console.WriteLine("Transform Invalidated!");
+            //Console.WriteLine("Transform Invalidated!");
 
             on_transform_invalidated();
 

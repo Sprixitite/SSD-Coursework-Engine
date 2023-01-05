@@ -25,14 +25,16 @@ namespace Engine.UI {
         }
 
         public UIAnchor anchor {
-            get;
-            protected set;
+            get => _anchor;
+            set { _anchor = value; invalidate_size(); }
         }
+        private UIAnchor _anchor;
 
         public UIPosition position {
-            get;
-            set;
+            get => _position;
+            set { _position = value; invalidate_size(); }
         }
+        private UIPosition _position;
 
         public UIPosition size {
             get => _size;
@@ -42,22 +44,40 @@ namespace Engine.UI {
 
         protected override void on_transform_invalidated() {
             
-            Form current_window = (Form)get_window().underlying;
+            Vector2 parent_dimensions = Vector2.ZERO;
 
-            underlying.Left = (int)Math.Round(current_window.Width * position.scale.x) + (int)position.offset.x;
-            underlying.Top = (int)Math.Round(current_window.Height * position.scale.y) + (int)position.offset.y;
+            if (parent.GetType() == typeof(UIWindow)) { parent_dimensions = new Vector2(parent.underlying.ClientSize.Width, parent.underlying.ClientSize.Height); }
+            else { parent_dimensions = new Vector2(parent.underlying.Width, parent.underlying.Height); }
 
-            underlying.Width = (int)Math.Round(current_window.Width * size.scale.x) + (int)size.offset.x;
-            underlying.Height = (int)Math.Round(current_window.Height * size.scale.y) + (int)size.offset.y;
+            underlying.Left = (int)Math.Floor(parent_dimensions.x * position.scale.x) + (int)position.offset.x;
+            underlying.Top = (int)Math.Floor(parent_dimensions.y * position.scale.y) + (int)position.offset.y;
+
+            underlying.Width = (int)Math.Floor(parent_dimensions.x * size.scale.x) + (int)size.offset.x;
+            underlying.Height = (int)Math.Floor(parent_dimensions.y * size.scale.y) + (int)size.offset.y;
 
             switch (anchor.x) {
                 case AnchorX.LEFT:
                     break;
                 case AnchorX.CENTER:
+                    underlying.Left -= (int)Math.Floor(underlying.Width / 2.0f);
                     break;
                 case AnchorX.RIGHT:
+                    underlying.Left -= underlying.Width;
                     break;
             }
+
+            switch (anchor.y) {
+                case AnchorY.TOP:
+                    break;
+                case AnchorY.CENTER:
+                    underlying.Top -= (int)Math.Floor(underlying.Height / 2.0f);
+                    break;
+                case AnchorY.BOTTOM:
+                    underlying.Top -= underlying.Height;
+                    break;
+            }
+
+            invalidate_size();
 
         }
 

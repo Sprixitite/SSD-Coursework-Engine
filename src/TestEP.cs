@@ -2,6 +2,8 @@ using System;
 
 using System.Drawing;
 
+using Engine.UI;
+
 namespace Engine {
 
     public class TestEntryPoint {
@@ -35,19 +37,36 @@ namespace Engine {
             // scheduler_thread.Start(game_window);
             // System.Windows.Forms.Application.Run(game_window);
 
-            UI.UIWindow window = new UI.UIWindow();
-
+            UIWindow window = new UIWindow();
             window.title = "Rory's Shiny Brand-Spanking-New Window";
 
-            UI.UIPanel panel = new UI.UIPanel();
-            window.add_element(panel);
+            UIBuilder<UIButton> button_builder = new UIBuilder<UIButton>();
 
-            panel.position = new UI.UIPosition(0.5f, 0.5f, 0.0f, 0.0f);
-            panel.size = new UI.UIPosition(0.25f, 0.25f, 0.0f, 0.0f);
+            UIButton button1 = button_builder.set_field("size", new UIPosition(0.33f, 0.25f, -5.0f, -5.0f))
+                                             .set_field("anchor", new UIAnchor(AnchorX.CENTER, AnchorY.TOP))
+                                             .set_field("text", "This is my button!")
+                                             .set_field("position", new UIPosition(0.17f, 0.0f, 0.0f, 5.0f))
+                                             .build();
+
+            UIButton button2 = button_builder.set_field("text", "This is my second button!")
+                                             .set_field("position", new UIPosition(0.5f, 0.0f, 0.0f, 5.0f))
+                                             .build();
+
+            UIButton button3 = button_builder.set_field("text", "This is my third button!")
+                                             .set_field("position", new UIPosition(0.83f, 0.0f, 0.0f, 5.0f))
+                                             .build();
+
+            button1.button_clicked += () => { Console.WriteLine("Button1 Pressed!"); };
+            button2.button_clicked += () => { Console.WriteLine("Button2 Pressed!"); };
+            button3.button_clicked += () => { Console.WriteLine("Button3 Pressed!"); };
+
+            window.add_element(button1);
+            window.add_element(button2);
+            window.add_element(button3);
 
             // panel.add_element(child_panel);
 
-            System.Windows.Forms.Application.Run(window);
+            window.run();
 
         }
 

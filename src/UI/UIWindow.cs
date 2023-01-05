@@ -11,7 +11,15 @@ namespace Engine.UI {
             derived_underlying.Resize += invalidate_size;
         }
 
-        public static implicit operator Form(UIWindow self) { return self.derived_underlying; }
+        public void run() {
+            Console.WriteLine(derived_underlying.Enabled);
+            // Do this to get the first frame ready
+            derived_underlying.Enabled = true;
+            invalidate_size();
+
+            // Actually run the thing lol
+            Application.Run(derived_underlying);
+        }
 
         public string title {
             get => underlying.Text;
