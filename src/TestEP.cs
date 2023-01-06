@@ -40,6 +40,22 @@ namespace Engine {
             UIWindow window = new UIWindow();
             window.title = "Rory's Shiny Brand-Spanking-New Window";
 
+            UITabs tab1 = new UITabs(new[]{"Control Gallery", "Library Credits"});
+            tab1.position = new UIPosition(0.0f, 0.0f, 0.0f, 0.0f);
+            tab1.size = new UIPosition(1.0f, 1.0f, 0.0f, 0.0f);
+
+            UILabel credits_label = new UILabel("Library developed by Rory \"Sprixitite\" Cousins\n\nDiscord: Sprix#0542\nEmail: sprixitite@gmail.com");
+            credits_label.position = new UIPosition(0.5f, 0.5f, 0.0f, 0.0f);
+            credits_label.size = new UIPosition(0.66f, 0.66f, 0.0f, 0.0f);
+            credits_label.anchor = UIAnchor.MIDDLE_CENTER;
+            credits_label.font_size = 11;
+            credits_label.text_anchor = UIAnchor.MIDDLE_CENTER;
+
+            tab1.add_tab_element("Library Credits", credits_label);
+
+            //tab1.anchor = new UIAnchor(AnchorX.LEFT, AnchorY.TOP);
+
+            /*
             UIBuilder<UIButton> button_builder = new UIBuilder<UIButton>();
 
             UIButton button1 = button_builder.set_field("size", new UIPosition(0.33f, 0.25f, -5.0f, -5.0f))
@@ -63,7 +79,7 @@ namespace Engine {
             UITextBox textbox = new UITextBox();
             textbox.text = "TEXTBOX TEST";
             textbox.position = new UIPosition(0.5f, 0.5f, 0.0f, 0.0f);
-            textbox.size = new UIPosition(0.0f, 0.0f, 69.0f, 69.0f);
+            textbox.size = new UIPosition(0.0f, 0.0f, 690.0f, 69.0f);
             textbox.anchor = new UIAnchor(AnchorX.CENTER, AnchorY.CENTER);
 
             UICheckbox checkbox = new UICheckbox();
@@ -76,6 +92,9 @@ namespace Engine {
             window.add_element(button3);
             window.add_element(textbox);
             window.add_element(checkbox);
+            */
+
+            window.add_element(tab1);
 
             IO.SprixaneSerializer a = new IO.SprixaneSerializer();
             a.Serialize(System.IO.Stream.Null, Decimal.MaxValue);

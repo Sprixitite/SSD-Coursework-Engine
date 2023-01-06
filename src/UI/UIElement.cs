@@ -12,8 +12,8 @@ namespace Engine.UI {
 
             elements = new List<UIElement>();
 
-            // Default to bottom left
-            anchor = new UIAnchor(AnchorX.LEFT, AnchorY.BOTTOM);
+            // Default to top left
+            anchor = UIAnchor.TOP_LEFT;
 
             // Default to four pixels from the bottom left on both axes
             position = new UIPosition(0, 0, 4, 4);

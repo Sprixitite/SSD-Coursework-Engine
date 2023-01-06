@@ -23,6 +23,11 @@ namespace Engine.UI {
             set => derived_underlying.Text = value;
         }
 
+        public bool multiline {
+            get => derived_underlying.Multiline;
+            set => derived_underlying.Multiline = value;
+        }
+
     }
 
 }

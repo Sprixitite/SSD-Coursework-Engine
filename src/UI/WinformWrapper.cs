@@ -11,8 +11,8 @@ namespace Engine.UI {
         protected void invalidate_size() => transform_invalidated.Invoke();
         protected void invalidate_size(object _s, EventArgs _e) => transform_invalidated.Invoke();
 
-        public static readonly WinformWrapper NULL;
-        private sealed class WrapperNull : WinformWrapper { }
+        public static readonly WinformWrapper NULL = new WrapperNull();
+        private sealed class WrapperNull : WinformWrapper { public WrapperNull() { underlying = new Label(); } }
 
         public void fake_event_user() {}
 
@@ -30,6 +30,10 @@ namespace Engine.UI {
 
             if (underlying.Controls.Contains(element.underlying)) throw new Exception("Attempted to add control to a " + this.GetType().Name + " more than once!");
 
+            WinformWrapper window = try_get_window();
+
+            window.underlying.SuspendLayout();
+
             // If the parent isn't null, remove the element from it's old parent
             if (element.parent != WinformWrapper.NULL) { element.parent.remove_element(element); }
 
@@ -38,16 +42,24 @@ namespace Engine.UI {
 
             element.parent = this;
 
+            window.underlying.ResumeLayout();
+
         }
 
         public void remove_element(UIElement element) {
 
             if (!underlying.Controls.Contains(element.underlying)) throw new Exception("Attempted to remove control from a " + this.GetType().Name + " that did not exist!");
 
+            WinformWrapper window = try_get_window();
+
+            window.underlying.SuspendLayout();
+
             elements.Remove(element);
             underlying.Controls.Remove(element.underlying);
 
             element.parent = WinformWrapper.NULL;
+
+            window.underlying.ResumeLayout();
 
         }
 
@@ -65,12 +77,23 @@ namespace Engine.UI {
 
         }
 
+        public WinformWrapper try_get_window() {
+
+            try {
+                return get_window();
+            } catch {
+                return WinformWrapper.NULL;
+            }
+
+        }
+
         public virtual WinformWrapper parent {
             get => _base_parent;
             protected set {
                 if (_base_parent != WinformWrapper.NULL) _base_parent.transform_invalidated -= _base_on_transform_invalidated;
                 value.transform_invalidated += _base_on_transform_invalidated;
                 _base_parent = value;
+                _base_on_transform_invalidated();
             }
         }
 
@@ -80,7 +103,13 @@ namespace Engine.UI {
 
             //Console.WriteLine("Transform Invalidated!");
 
+            WinformWrapper window = try_get_window();
+
+            window.underlying.SuspendLayout();
+
             on_transform_invalidated();
+
+            window.underlying.ResumeLayout();
 
         }
 

@@ -58,6 +58,7 @@
     <Compile Include="src\data\Bounds.cs" />
     <Compile Include="src\data\Transform.cs" />
     <Compile Include="src\graphics\Camera.cs" />
+    <Compile Include="src\graphics\Colour.cs" />
     <Compile Include="src\graphics\Matrix.cs" />
     <Compile Include="src\graphics\StaticTexture.cs" />
     <Compile Include="src\graphics\Texture.cs" />
@@ -74,12 +75,15 @@
     <Compile Include="src\Util\Threads.cs" />
     <Compile Include="src\UI\UIAnchor.cs" />
     <Compile Include="src\UI\UIBuilder.cs" />
+    <Compile Include="src\UI\UIButton.cs" />
+    <Compile Include="src\UI\UICheckbox.cs" />
     <Compile Include="src\UI\UIElement.cs" />
     <Compile Include="src\UI\UIPanel.cs" />
     <Compile Include="src\UI\UIPosition.cs" />
-    <Compile Include="src\UI\UICheckbox.cs" />
-    <Compile Include="src\UI\UIButton.cs" />
+    <Compile Include="src\UI\UIRichLabel.cs" />
+    <Compile Include="src\UI\UITabs.cs" />
     <Compile Include="src\UI\UITextBox.cs" />
+    <Compile Include="src\UI\UILabel.cs" />
     <Compile Include="src\UI\UIWindow.cs" />
     <Compile Include="src\UI\WinformWrapper.cs" />
     <Compile Include="src\windowing\FormWrapper.cs">
