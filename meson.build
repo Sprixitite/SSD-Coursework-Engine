@@ -7,7 +7,7 @@ subdir('src')
 
 CSHARP_ARGS = ['/r:System.Windows.Forms.dll', '/r:System.Drawing.dll']
 
-WinForMono_subproject = subproject('WinforMono')
+WinForMono_subproject = subproject('WinForMono')
 WinForMono_dep = WinForMono_subproject.get_variable('WinForMono_dep')
 
 if testex
