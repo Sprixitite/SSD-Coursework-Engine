@@ -96,4 +96,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="./subprojects/WinForMono/WinForMono.csproj" />
+  </ItemGroup>
 </Project>
