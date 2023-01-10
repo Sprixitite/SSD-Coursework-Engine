@@ -1,1 +1,0 @@
-SPRIX_ENGINE_SRC += files('WinformWrapper.cs', 'UIAnchor.cs', 'UIButton.cs', 'UIBuilder.cs', 'UICheckbox.cs', 'UIElement.cs', 'UIPanel.cs', 'UITabs.cs', 'UITextBox.cs', 'UILabel.cs', 'UIPosition.cs', 'UIWindow.cs')

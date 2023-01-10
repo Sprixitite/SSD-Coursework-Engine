@@ -1,0 +1,3 @@
+[submodule "subprojects/WinForMono"]
+	path = subprojects/WinForMono
+	url = https://github.com/Sprixitite/WinForMono
